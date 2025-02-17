@@ -25,11 +25,11 @@ len(files)
 # --------------------------------------------------------------
 
 data_path = "../../data/raw/MetaMotion\\"
-f = files[0]
+f = files[1]
 
 participant = f.split("-")[0].replace(data_path, "")
 label = f.split("-")[1]
-category = f.split("-")[2].rstrip("123")
+category = f.split("-")[2].rstrip("123").rstrip("_MetaWear_2019")
 
 df = pd.read_csv(f)
 
@@ -41,6 +41,32 @@ df["category"] = category
 # Read all files
 # --------------------------------------------------------------
 
+acc_df = pd.DataFrame()
+gyr_df = pd.DataFrame()
+
+acc_set = 1
+gyr_set = 1
+
+# Take the two datasets and bundle them together
+for f in files:
+    participant = f.split("-")[0].replace(data_path, "")
+    label = f.split("-")[1]
+    category = f.split("-")[2].rstrip("123").rstrip("_MetaWear_2019")
+
+    df = pd.read_csv(f)
+
+    if "Accelerometer" in f:
+        df["set"] = acc_set
+        acc_set += 1
+        acc_df = pd.concat([acc_df, df])
+
+    if "Gyroscope" in f:
+        df["set"] = gyr_set
+        gyr_set += 1
+        gyr_df = pd.concat([gyr_df, df])
+
+# Check the set
+acc_df[acc_df["set"] == 27]
 
 # --------------------------------------------------------------
 # Working with datetimes
