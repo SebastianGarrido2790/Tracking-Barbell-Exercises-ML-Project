@@ -9,7 +9,7 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "features"))
 )
 
-from data_transformation import LowPassFilter, PrincipalComponentAnalysis
+from DataTransformation import LowPassFilter, PrincipalComponentAnalysis
 from temporal_abstraction import NumericalAbstraction
 from frequency_abstraction import FourierTransformation
 
